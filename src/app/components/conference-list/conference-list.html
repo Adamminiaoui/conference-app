@@ -1,0 +1,53 @@
+<section class="section teal">
+  <div class="icon">📅</div>
+  <div class="content">
+    <h2 class="title">Liste des conférences à venir</h2>
+    <p class="lead">Cliquez sur une conférence pour afficher ses détails.</p>
+
+    <!-- Two-way binding : recherche par titre -->
+    <input
+      class="search"
+      type="text"
+      placeholder="Taper le titre de la conférence"
+      [(ngModel)]="searchTitle"
+    />
+
+    <div class="grid">
+      <!-- Contrôle de flux natif : @for ... @empty -->
+      @for (c of filteredConferences; track c.id) {
+        <article class="card" appHighlight="#eef4ff" (click)="toggleDetails(c)">
+          <!-- Pipe uppercase -->
+          <h3>{{ c.title | uppercase }}</h3>
+          <!-- Pipe date -->
+          <p><strong>Date :</strong> {{ c.date | date: 'dd/MM/yyyy' }}</p>
+          <p><strong>Lieu :</strong> {{ c.place }}</p>
+          <p><strong>Places restantes :</strong> {{ placesRestantes(c) }}</p>
+
+          @if (selectedId === c.id) {
+            <p class="details">{{ c.description }}</p>
+            <p class="details">
+              <strong>Participants :</strong> {{ c.nbParticipants }} / {{ c.maxParticipants }}
+            </p>
+          }
+
+          <!-- Directive ngClass + property binding [disabled] + event binding (click) -->
+          <button
+            type="button"
+            class="btn"
+            [ngClass]="buttonClass(c)"
+            [disabled]="placesRestantes(c) <= 0"
+            (click)="inscrire(c, $event)"
+          >
+            S'inscrire
+          </button>
+        </article>
+      } @empty {
+        @if (conferences.length === 0) {
+          <p class="empty">Aucune conférence n'est enregistrée pour le moment.</p>
+        } @else {
+          <p class="empty">Aucune conférence ne correspond à « {{ searchTitle }} ».</p>
+        }
+      }
+    </div>
+  </div>
+</section>

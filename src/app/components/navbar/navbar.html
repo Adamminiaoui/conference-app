@@ -1,0 +1,8 @@
+<nav class="navbar">
+  @for (item of items; track item) {
+    <!-- Class binding : [class.active] -->
+    <button type="button" [class.active]="item === active" (click)="select(item)">
+      {{ item }}
+    </button>
+  }
+</nav>

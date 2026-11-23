@@ -1,0 +1,20 @@
+<section class="section green">
+  <div class="icon">👥</div>
+  <div class="content">
+    <h2>Liste des amis</h2>
+
+    <!-- Two-way binding [(ngModel)] : modifier un champ met à jour les autres -->
+    <div class="inputs">
+      <input [(ngModel)]="name" />
+      <input [(ngModel)]="name" />
+      <input [(ngModel)]="name" />
+    </div>
+    <p class="hint">Bonjour {{ name }} !</p>
+
+    <ul>
+      @for (friend of friends; track friend) {
+        <li>{{ friend }}</li>
+      }
+    </ul>
+  </div>
+</section>
